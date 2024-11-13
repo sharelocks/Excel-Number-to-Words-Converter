@@ -1,7 +1,7 @@
 Function NumberToWords(ByVal MyNumber)
     Dim Units As Variant, Tens As Variant
     Dim Temp As String, DecimalPlace As Integer, Count As Integer
-    Dim DecimalWords As String
+    Dim CentsPart As String
     
     Units = Array("", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine")
     Tens = Array("", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety")
@@ -9,11 +9,12 @@ Function NumberToWords(ByVal MyNumber)
     MyNumber = Trim(CStr(MyNumber))
     DecimalPlace = InStr(MyNumber, ".")
     If DecimalPlace > 0 Then
-        DecimalWords = " Point"
-        For Count = DecimalPlace + 1 To Len(MyNumber)
-            DecimalWords = DecimalWords & " " & Units(Val(Mid(MyNumber, Count, 1)))
-        Next Count
+        CentsPart = Mid(MyNumber, DecimalPlace + 1)
+        If Len(CentsPart) = 1 Then CentsPart = CentsPart & "0" ' Ensure two decimal places for cents
+        CentsPart = " and " & ChunkToWords(CentsPart) & " Cents"
         MyNumber = Left(MyNumber, DecimalPlace - 1)
+    Else
+        CentsPart = ""
     End If
     
     Dim Result As String
@@ -41,7 +42,7 @@ Function NumberToWords(ByVal MyNumber)
         PlaceIndex = PlaceIndex + 1
     Loop
     
-    NumberToWords = Trim(Result) & " Dollar" & DecimalWords
+    NumberToWords = Trim(Result) & " Dollar" & IIf(Val(Result) > 1, "s", "") & CentsPart
 End Function
 
 Private Function ChunkToWords(ByVal Chunk)
