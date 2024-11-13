@@ -29,7 +29,7 @@ This guide will help you set up the VBA function as an Excel Add-In, so it is av
 5. **Save the workbook** as an Excel Add-In:
    - Go to **File > Save As**.
    - Choose **Excel Add-In (.xlam)** as the file type.
-   - Name it something like `NumberToWordsConverter` and save it in the default location (`C:\Users\[YourUsername]\AppData\Roaming\Microsoft\AddIns`).
+   - Name it something like `NumberToWordsConverter` and save it in the default location (`C:\Users\%username%\AppData\Roaming\Microsoft\AddIns`).
 
 ### 2. Load the Add-In in Excel
 
